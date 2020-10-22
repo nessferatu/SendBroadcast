@@ -25,6 +25,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("com.example.EXAMPLE_ACTION".equals(intent.getAction())) {
+                String receivedText = intent.getStringExtra("com.example.EXTRA_TEXT");
+                textView.setText(receivedText);
+            }
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter("com.example.EXAMPLE_ACTION");
+        registerReceiver(broadcastReceiver, filter);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(broadcastReceiver);
+    }
+
     public void sendBroadcasts(View v) {
 
 
@@ -39,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
         intent.setClassName("com.example.dysguwidget_ver4",
                 "com.example.dysguwidget_ver4.WidgetProvider");
         sendBroadcast(intent);
+        Intent intent1 = new Intent("com.example.EXAMPLE_ACTION");
+        intent1.putExtra("com.example.EXTRA_TEXT", "HAPPY HALLOWEEN!");
+        sendBroadcast(intent1);
 
     }
+
 }
+

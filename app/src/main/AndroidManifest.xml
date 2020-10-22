@@ -15,7 +15,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".ExampleBroadcastReceiver2"/>
+        <receiver
+            android:name=".ExampleBroadcastReceiver2"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.codinginflow.EXAMPLE_ACTION" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
